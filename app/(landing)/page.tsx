@@ -17,6 +17,10 @@ const LandingPage = () => {
         <Link href="https://www.flaticon.com/de/kostenlose-icons/kunstliche-intelligenz">
           Künstliche intelligenz Icons erstellt von Triangle Squad - Flaticon
         </Link>
+        <Link href="https://www.flaticon.com/de/kostenlose-icons/nichts-gefunden">
+          Empty Icons erstellt von Freepik - Flaticon
+        </Link>
+        <Link href="https://www.flaticon.com/free-icons/refresh">Refresh icons created by Dave Gandy - Flaticon</Link>
       </div>
     </div>
   )
