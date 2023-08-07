@@ -1,7 +1,7 @@
 "use client"
 
 import { Heading } from "@/components/heading"
-import { MusicIcon } from "lucide-react"
+import { MusicIcon, VideoIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import * as zod from "zod"
 import { formSchema } from "./constants"
@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
 import UserAvatar from "@/components/user-avatar"
 import BotAvatar from "@/components/bot-avatar"
 
-const MusicPage = () => {
+const VideoPage = () => {
   const router = useRouter()
   const [music, setMusic] = useState<string>()
 
@@ -51,11 +51,11 @@ const MusicPage = () => {
   return (
     <div>
       <Heading
-        title="Music"
-        description="Music Generation"
-        icon={MusicIcon}
-        iconColor="text-emerald-500"
-        bgColor="bg-emerald-500/10"
+        title="Video"
+        description="Video Generation"
+        icon={VideoIcon}
+        iconColor="text-orange-500"
+        bgColor="bg-orange-500/10"
       />
       <div className="px-4 lg:px-8">
         <div>
@@ -72,7 +72,7 @@ const MusicPage = () => {
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                         disabled={isLoading}
-                        placeholder="Guitar solo"
+                        placeholder="Little stone in Japan"
                         {...field}
                       />
                     </FormControl>
@@ -103,4 +103,4 @@ const MusicPage = () => {
   )
 }
 
-export default MusicPage
+export default VideoPage
