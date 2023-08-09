@@ -72,7 +72,7 @@ const VideoPage = () => {
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                         disabled={isLoading}
-                        placeholder="Little stone in Japan"
+                        placeholder="Little cat in Japan"
                         {...field}
                       />
                     </FormControl>
@@ -91,7 +91,7 @@ const VideoPage = () => {
               <Loader />
             </div>
           )}
-          {!music && !isLoading && <Empty label="No Music!" />}
+          {!music && !isLoading && <Empty label="No Video!" />}
           {music && (
             <audio controls className="w-full mt-8">
               <source src={music} />
