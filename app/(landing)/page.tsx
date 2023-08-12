@@ -4,15 +4,8 @@ import Link from "next/link"
 const LandingPage = () => {
   return (
     <div>
-      Landing Page (Unprotected)
-      <div>
-        <Link href="/sign-in">
-          <Button>Login</Button>
-        </Link>
-        <Link href="/sign-up">
-          <Button>Register</Button>
-        </Link>
-      </div>
+      <div className="h-full">{/* <LandingNavbar /> */}</div>
+      {/* Footer */}
       <div className="font-extralight absolute bottom-1 flex flex-row justify-start p-2 m-2 bg-slate-300">
         <div className="flex flex-col">
           <Link href="https://www.flaticon.com/de/kostenlose-icons/kunstliche-intelligenz">
