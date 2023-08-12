@@ -39,4 +39,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 `npx prisma studio` interface to look in the database
 
-`npx prisma generate` generate the schema
+`npx prisma generate` generate the schema if you have new models
