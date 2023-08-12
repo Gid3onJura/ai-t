@@ -56,9 +56,10 @@ const routes = [
 
 interface SidebarProps {
   apiLimitCount: number
+  isUpgraded: boolean
 }
 
-const Sidebar = ({ apiLimitCount }: SidebarProps) => {
+const Sidebar = ({ apiLimitCount = 0, isUpgraded = false }: SidebarProps) => {
   const pathName = usePathname()
   return (
     <div className="space-y-4 flex flex-col h-full bg-[#111827] text-white pb-3">
@@ -87,7 +88,7 @@ const Sidebar = ({ apiLimitCount }: SidebarProps) => {
           ))}
         </div>
       </div>
-      <FreeCounter apiLimitCount={apiLimitCount} />
+      <FreeCounter isUpgraded={isUpgraded} apiLimitCount={apiLimitCount} />
     </div>
   )
 }

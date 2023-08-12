@@ -1,4 +1,5 @@
 import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit"
+import { checkSubscription } from "@/lib/subscription"
 import { auth } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
 import Replicate from "replicate"
@@ -13,6 +14,7 @@ export async function POST(request: Request) {
     const body = await request.json()
     const { prompt } = body
     const freeTrial = await checkApiLimit()
+    const isUpgraded = await checkSubscription()
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 })
@@ -22,7 +24,7 @@ export async function POST(request: Request) {
       return new NextResponse("prompt required", { status: 400 })
     }
 
-    if (!freeTrial) {
+    if (!freeTrial && !isUpgraded) {
       return new NextResponse("Free trial has expired", { status: 403 })
     }
 
@@ -35,7 +37,9 @@ export async function POST(request: Request) {
       }
     )
 
-    await increaseApiLimit()
+    if (!isUpgraded) {
+      await increaseApiLimit()
+    }
 
     return NextResponse.json(response)
   } catch (error) {
