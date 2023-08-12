@@ -1,3 +1,4 @@
+import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit"
 import { auth } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
 import { Configuration, ChatCompletionRequestMessage, OpenAIApi } from "openai"
@@ -18,6 +19,7 @@ export async function POST(request: Request) {
     const { userId } = auth()
     const body = await request.json()
     const { messages } = body
+    const freeTrial = await checkApiLimit()
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 })
@@ -31,10 +33,16 @@ export async function POST(request: Request) {
       return new NextResponse("prompt required", { status: 400 })
     }
 
+    if (!freeTrial) {
+      return new NextResponse("Free trial has expired", { status: 403 })
+    }
+
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [instructionMessage, ...messages],
     })
+
+    await increaseApiLimit()
 
     return NextResponse.json(response.data.choices[0].message)
   } catch (error) {

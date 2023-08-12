@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     const { userId } = auth()
     const body = await request.json()
     const { messages } = body
+    const freeTrial = await checkApiLimit()
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 })
@@ -27,8 +28,6 @@ export async function POST(request: Request) {
     if (!messages) {
       return new NextResponse("prompt required", { status: 400 })
     }
-
-    const freeTrial = await checkApiLimit()
 
     if (!freeTrial) {
       return new NextResponse("Free trial has expired", { status: 403 })
