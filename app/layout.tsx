@@ -7,7 +7,7 @@ import { ToasterProvider } from "@/components/toaster-provider"
 import { CrispProvider } from "@/components/crisp-provider"
 
 const inter = Inter({ subsets: ["latin"] })
-export const dynamic = "force-dynamic"
+export const dynamic = "force-static"
 export const revalidate = 0
 
 export const metadata: Metadata = {
