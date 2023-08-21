@@ -19,6 +19,9 @@ import { cn } from "@/lib/utils"
 import UserAvatar from "@/components/user-avatar"
 import BotAvatar from "@/components/bot-avatar"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 const MusicPage = () => {
   const router = useRouter()
   const [music, setMusic] = useState<string>()

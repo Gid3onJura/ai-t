@@ -22,6 +22,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardFooter } from "@/components/ui/card"
 import Image from "next/image"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 const ImagePage = () => {
   const router = useRouter()
   const [images, setImages] = useState<string[]>([])

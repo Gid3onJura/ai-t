@@ -21,6 +21,9 @@ import BotAvatar from "@/components/bot-avatar"
 import { useProModal } from "@/hooks/use-pro-modal"
 import { toast } from "react-hot-toast"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 const ConversationPage = () => {
   const router = useRouter()
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
