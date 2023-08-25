@@ -10,23 +10,23 @@ const replicate = new Replicate({
 
 export async function POST(request: Request) {
   try {
-    const { userId } = auth()
+    // const { userId } = auth()
     const body = await request.json()
     const { prompt } = body
-    const freeTrial = await checkApiLimit()
-    const isUpgraded = await checkSubscription()
+    // const freeTrial = await checkApiLimit()
+    // const isUpgraded = await checkSubscription()
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 })
-    }
+    // if (!userId) {
+    //   return new NextResponse("Unauthorized", { status: 401 })
+    // }
 
     if (!prompt) {
       return new NextResponse("prompt required", { status: 400 })
     }
 
-    if (!freeTrial && !isUpgraded) {
-      return new NextResponse("Free trial has expired", { status: 403 })
-    }
+    // if (!freeTrial && !isUpgraded) {
+    //   return new NextResponse("Free trial has expired", { status: 403 })
+    // }
 
     const response = await replicate.run(
       "anotherjesse/zeroscope-v2-xl:9f747673945c62801b13b84701c783929c0ee784e4748ec062204894dda1a351",
@@ -37,9 +37,9 @@ export async function POST(request: Request) {
       }
     )
 
-    if (!isUpgraded) {
-      await increaseApiLimit()
-    }
+    // if (!isUpgraded) {
+    //   await increaseApiLimit()
+    // }
 
     return NextResponse.json(response)
   } catch (error) {

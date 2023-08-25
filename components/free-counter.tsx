@@ -13,7 +13,7 @@ interface FreeCounterProps {
   isUpgraded: boolean
 }
 
-const FreeCounter = ({ apiLimitCount = 0, isUpgraded = false }: FreeCounterProps) => {
+const FreeCounter = () => {
   const [mounted, setMounted] = useState(false)
   const proModal = useProModal()
 
@@ -25,13 +25,13 @@ const FreeCounter = ({ apiLimitCount = 0, isUpgraded = false }: FreeCounterProps
     return null
   }
 
-  if (isUpgraded) {
-    return null
-  }
+  // if (isUpgraded) {
+  //   return null
+  // }
 
   return (
     <div className="px-3">
-      <Card className="bg-white/10 border-0">
+      {/* <Card className="bg-white/10 border-0">
         <CardContent className="py-6">
           <div className="text-center text-sm text-white mb-4 space-y-2">
             <p>
@@ -44,7 +44,7 @@ const FreeCounter = ({ apiLimitCount = 0, isUpgraded = false }: FreeCounterProps
             <ZapIcon className="w-4 h-4 ml-2 fill-white" />
           </Button>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   )
 }

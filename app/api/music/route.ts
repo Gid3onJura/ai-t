@@ -10,23 +10,23 @@ const replicate = new Replicate({
 
 export async function POST(request: Request) {
   try {
-    const { userId } = auth()
+    // const { userId } = auth()
     const body = await request.json()
     const { prompt } = body
-    const freeTrial = await checkApiLimit()
-    const isUpgraded = await checkSubscription()
+    // const freeTrial = await checkApiLimit()
+    // const isUpgraded = await checkSubscription()
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 })
-    }
+    // if (!userId) {
+    //   return new NextResponse("Unauthorized", { status: 401 })
+    // }
 
     if (!prompt) {
       return new NextResponse("prompt required", { status: 400 })
     }
 
-    if (!freeTrial && !isUpgraded) {
-      return new NextResponse("Free trial has expired", { status: 403 })
-    }
+    // if (!freeTrial && !isUpgraded) {
+    //   return new NextResponse("Free trial has expired", { status: 403 })
+    // }
 
     const response = await replicate.run(
       "riffusion/riffusion:8cf61ea6c56afd61d8f5b9ffd14d7c216c0a93844ce2d82ac1c9ecc9c7f24e05",
@@ -37,9 +37,9 @@ export async function POST(request: Request) {
       }
     )
 
-    if (!isUpgraded) {
-      await increaseApiLimit()
-    }
+    // if (!isUpgraded) {
+    //   await increaseApiLimit()
+    // }
 
     return NextResponse.json(response)
   } catch (error) {

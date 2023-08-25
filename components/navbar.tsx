@@ -4,12 +4,13 @@ import { getApiLimitCount } from "@/lib/api-limit"
 import { checkSubscription } from "@/lib/subscription"
 
 const Navbar = async () => {
-  const apiLimitCount = await getApiLimitCount()
-  const isUpgraded = await checkSubscription()
+  // const apiLimitCount = await getApiLimitCount()
+  // const isUpgraded = await checkSubscription()
 
   return (
     <div className="flex items-center p-4">
-      <MobileSideBar isUpgraded={isUpgraded} apiLimitCount={apiLimitCount} />
+      {/* <MobileSideBar isUpgraded={isUpgraded} apiLimitCount={apiLimitCount} /> */}
+      <MobileSideBar />
       <div className="flex w-full justify-end">
         <UserButton afterSignOutUrl="/" />
       </div>

@@ -11,7 +11,7 @@ interface MobileSideBarProps {
   isUpgraded: boolean
 }
 
-const MobileSideBar = ({ apiLimitCount = 0, isUpgraded = false }: MobileSideBarProps) => {
+const MobileSideBar = () => {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
@@ -30,7 +30,8 @@ const MobileSideBar = ({ apiLimitCount = 0, isUpgraded = false }: MobileSideBarP
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
-        <Sidebar isUpgraded={isUpgraded} apiLimitCount={apiLimitCount} />
+        {/* <Sidebar isUpgraded={isUpgraded} apiLimitCount={apiLimitCount} /> */}
+        <Sidebar />
       </SheetContent>
     </Sheet>
   )

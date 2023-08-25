@@ -13,7 +13,7 @@ const font = Montserrat({
 })
 
 export const LandingNavbar = () => {
-  const { isSignedIn } = useAuth()
+  // const { isSignedIn } = useAuth()
 
   return (
     <nav className="p-4 bg-transparent flex items-center justify-between">
@@ -24,9 +24,11 @@ export const LandingNavbar = () => {
         <h1 className={cn("text-2xl font-bold text-white", font.className)}>AI-T</h1>
       </Link>
       <div className="flex items-center gap-x-2">
-        <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
+        {/* <Link href={isSignedIn ? "/dashboard" : "/sign-up"}> */}
+        <Link href={"/dashboard"}>
           <Button variant="outline" className="rounded-full">
-            {isSignedIn ? "Dashboard" : "Let's go"}
+            {/* {isSignedIn ? "Dashboard" : "Let's go"} */}
+            {"Dashboard"}
           </Button>
         </Link>
       </div>
