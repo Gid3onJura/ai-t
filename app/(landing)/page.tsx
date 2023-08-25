@@ -12,8 +12,8 @@ const LandingPage = () => {
         <LandingNavbar />
         <LandingHero />
         <LandingContent />
+        <LandingFooter />
       </div>
-      <LandingFooter />
     </div>
   )
 }
