@@ -34,7 +34,7 @@ export default function Page() {
   return (
     <div className="grid place-items-center h-screen">
       <div className="shadow-lg p-5 rounded-lg border-t-4 border-red-950">
-        <h1 className="text-xl font-bold my-4">Sign In</h1>
+        <h1 className="text-xl font-bold my-4">Sign Up</h1>
         <div>
           <Form {...form}>
             <form
@@ -74,7 +74,7 @@ export default function Page() {
                 )}
               />
               <Button className="col-span-12 lg:col-span-2 w-full" disabled={isLoading}>
-                Login
+                Register
               </Button>
             </form>
           </Form>
