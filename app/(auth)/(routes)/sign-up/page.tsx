@@ -1,4 +1,4 @@
-// import { SignUp } from "@clerk/nextjs"
+"use client"
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { formSchema } from "./constants"
@@ -7,10 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import * as zod from "zod"
-
-// export default function Page() {
-//   return <SignUp />
-// }
+import Link from "next/link"
 
 export default function Page() {
   const form = useForm<zod.infer<typeof formSchema>>({
@@ -34,7 +31,7 @@ export default function Page() {
   return (
     <div className="grid place-items-center h-screen">
       <div className="shadow-lg p-5 rounded-lg border-t-4 border-red-950">
-        <h1 className="text-xl font-bold my-4">Sign Up</h1>
+        <h1 className="text-xl font-bold my-4">Register</h1>
         <div>
           <Form {...form}>
             <form
@@ -78,6 +75,9 @@ export default function Page() {
               </Button>
             </form>
           </Form>
+          <Link className="text-sm, mt-3 text-right" href={"/sign-in"}>
+            Du hast einen Account? <span className="underline">Login</span>
+          </Link>
         </div>
       </div>
     </div>
