@@ -23,18 +23,22 @@ export const options: NextAuthOptions = {
           placeholder: "your password",
         },
       },
-      async authorize(credentials) {
-        if (!credentials || !credentials.email || !credentials.password) {
-          return null
-        }
-        const dbUser = await prismadb.user.findFirst({
-          where: {
-            email: credentials?.email,
+      async authorize(credentials, request) {
+        const response = await fetch("http://localhost:3000/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            email: credentials?.email,
+            password: credentials?.password,
+          }),
         })
 
-        if (dbUser && dbUser.password === credentials?.password) {
-          return dbUser
+        const user = await response.json()
+
+        if (user) {
+          return user
         }
 
         return null
