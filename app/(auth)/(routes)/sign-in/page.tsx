@@ -8,8 +8,24 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import * as zod from "zod"
 import Link from "next/link"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 export default function Page() {
+  const [error, setError] = useState("")
+
+  const router = useRouter()
+  const session = useSession()
+
+  if (session.status === "loading") {
+    return <p>Loading...</p>
+  }
+
+  if (session.status === "authenticated") {
+    router?.push("/dashboard")
+  }
+
   const form = useForm<zod.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -23,6 +39,23 @@ export default function Page() {
   const onSubmit = async (values: zod.infer<typeof formSchema>) => {
     try {
       form.reset()
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values?.email,
+          password: values?.password,
+        }),
+      })
+
+      if (response.status === 200 || response.status === 201) {
+        router.push("/dashboard")
+      } else {
+        router.push("/sign-in")
+        setError("Something  wrong!")
+      }
     } catch (error: any) {
     } finally {
     }
@@ -75,6 +108,7 @@ export default function Page() {
               </Button>
             </form>
           </Form>
+          {error && <div>Etwas ist schief gelaufen! {error}</div>}
           <Link className="text-sm, mt-3 text-right" href={"/sign-up"}>
             Du hast keinen Account? <span className="underline">Register</span>
           </Link>

@@ -8,8 +8,14 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import * as zod from "zod"
 import Link from "next/link"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function Page() {
+  const [error, setError] = useState("")
+
+  const router = useRouter()
+
   const form = useForm<zod.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -23,7 +29,25 @@ export default function Page() {
   const onSubmit = async (values: zod.infer<typeof formSchema>) => {
     try {
       form.reset()
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values?.email,
+          password: values?.password,
+        }),
+      })
+
+      if (response.status === 200 || response.status === 201) {
+        router.push("/sign-in")
+      } else {
+        router.push("/sign-up")
+        setError("Something  wrong!")
+      }
     } catch (error: any) {
+      setError(error)
     } finally {
     }
   }
@@ -75,6 +99,7 @@ export default function Page() {
               </Button>
             </form>
           </Form>
+          {error && <div>Etwas ist schief gelaufen! {error}</div>}
           <Link className="text-sm, mt-3 text-right" href={"/sign-in"}>
             Du hast einen Account? <span className="underline">Login</span>
           </Link>

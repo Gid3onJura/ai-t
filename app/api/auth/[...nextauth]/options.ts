@@ -1,8 +1,6 @@
 import prismadb from "@/lib/prismadb"
 import type { NextAuthOptions, User, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import GoogleProvider from "next-auth/providers/google"
-import GithubProvider from "next-auth/providers/github"
 
 export const options: NextAuthOptions = {
   session: {
@@ -24,7 +22,7 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials, request) {
-        const response = await fetch("http://localhost:3000/api/login", {
+        const response = await fetch("http://localhost:3000/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -45,4 +43,7 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    error: "/sign-in",
+  },
 }

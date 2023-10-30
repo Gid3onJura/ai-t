@@ -13,7 +13,9 @@ const font = Montserrat({
 })
 
 export const LandingNavbar = () => {
-  const { data: session } = useSession()
+  const session = useSession()
+
+  console.log(session)
 
   return (
     <nav className="p-4 bg-transparent flex items-center justify-between">
