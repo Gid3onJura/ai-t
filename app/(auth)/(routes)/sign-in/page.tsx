@@ -18,14 +18,6 @@ export default function Page() {
   const router = useRouter()
   const session = useSession()
 
-  if (session.status === "loading") {
-    return <p>Loading...</p>
-  }
-
-  if (session.status === "authenticated") {
-    router?.push("/dashboard")
-  }
-
   const form = useForm<zod.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,6 +25,14 @@ export default function Page() {
       password: "",
     },
   })
+
+  if (session.status === "loading") {
+    return <p>Loading...</p>
+  }
+
+  if (session.status === "authenticated") {
+    router?.push("/dashboard")
+  }
 
   const isLoading = form.formState.isSubmitting
 
