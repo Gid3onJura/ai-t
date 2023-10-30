@@ -29,9 +29,9 @@ export const LandingNavbar = () => {
         <Button
           variant="outline"
           className="rounded-full"
-          onClick={session && session.user ? () => signOut() : () => signIn()}
+          onClick={session && session.data ? () => signOut() : () => signIn()}
         >
-          {session && session.user ? "Logout" : "Login"}
+          {session && session.data ? "Logout" : "Login"}
         </Button>
       </div>
     </nav>
