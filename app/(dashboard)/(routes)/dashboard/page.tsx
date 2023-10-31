@@ -66,7 +66,7 @@ const DashboardPage = () => {
           onClick={() =>
             signOut({
               redirect: true,
-              callbackUrl: `${window.location.origin}`,
+              callbackUrl: `${window.location.origin}/`,
             })
           }
         >
