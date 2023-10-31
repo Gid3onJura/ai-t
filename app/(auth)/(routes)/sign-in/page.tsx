@@ -10,7 +10,7 @@ import * as zod from "zod"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 
 export default function Page() {
   const [error, setError] = useState("")
@@ -26,38 +26,23 @@ export default function Page() {
     },
   })
 
-  if (session.status === "loading") {
-    return <p>Loading...</p>
-  }
-
-  if (session.status === "authenticated") {
-    router?.push("/dashboard")
-  }
-
   const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: zod.infer<typeof formSchema>) => {
     try {
-      form.reset()
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: values?.email,
-          password: values?.password,
-        }),
+      const signInData = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
       })
-
-      if (response.status === 200 || response.status === 201) {
-        router.push("/dashboard")
+      console.log("signInData", signInData)
+      if (signInData?.error) {
+        console.log(signInData.error)
       } else {
-        router.push("/sign-in")
-        setError("Something  wrong!")
+        router.refresh()
+        router.push("/dashboard")
       }
     } catch (error: any) {
-    } finally {
+      console.log(error)
     }
   }
 

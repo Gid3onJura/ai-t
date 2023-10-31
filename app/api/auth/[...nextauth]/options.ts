@@ -1,11 +1,18 @@
 import prismadb from "@/lib/prismadb"
 import type { NextAuthOptions, User, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import * as bcrypt from "bcryptjs"
 
 export const options: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/sign-in",
+  },
+  adapter: PrismaAdapter(prismadb),
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -22,28 +29,58 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials, request) {
-        const response = await fetch("http://localhost:3000/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-        })
-
-        const user = await response.json()
-
-        if (user) {
-          return user
+        if (!credentials?.email || !credentials?.password) {
+          return null
         }
 
+        // const response = await fetch("/api/auth/login", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({
+        //     email: credentials?.email,
+        //     password: credentials?.password,
+        //   }),
+        // })
+        const existingUser = await prismadb.user.findFirst({
+          where: {
+            email: credentials?.email,
+          },
+        })
+
+        if (existingUser && (await bcrypt.compare(credentials.password, existingUser.password))) {
+          const { password, ...user } = existingUser
+          if (user) {
+            return {
+              id: `${user.id}`,
+              username: user.username,
+              email: user.email,
+            }
+          }
+        }
         return null
       },
     }),
   ],
-  pages: {
-    error: "/sign-in",
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          username: user.username,
+        }
+      }
+      return token
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          username: token.username,
+        },
+      }
+    },
   },
 }
