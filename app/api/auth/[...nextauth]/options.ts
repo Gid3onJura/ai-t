@@ -1,24 +1,18 @@
 import prismadb from "@/lib/prismadb"
 import type { NextAuthOptions, User, getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-<<<<<<< HEAD
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import * as bcrypt from "bcryptjs"
-=======
->>>>>>> master
 
 export const options: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-<<<<<<< HEAD
   pages: {
     signIn: "/sign-in",
   },
   adapter: PrismaAdapter(prismadb),
   secret: process.env.NEXTAUTH_SECRET,
-=======
->>>>>>> master
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -35,21 +29,10 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials, request) {
-<<<<<<< HEAD
         if (!credentials?.email || !credentials?.password) {
           return null
         }
-
-        // const response = await fetch("/api/auth/login", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     email: credentials?.email,
-        //     password: credentials?.password,
-        //   }),
-        // })
+        
         const existingUser = await prismadb.user.findFirst({
           where: {
             email: credentials?.email,
@@ -66,30 +49,10 @@ export const options: NextAuthOptions = {
             }
           }
         }
-=======
-        const response = await fetch("http://localhost:3000/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-        })
-
-        const user = await response.json()
-
-        if (user) {
-          return user
-        }
-
->>>>>>> master
         return null
       },
     }),
   ],
-<<<<<<< HEAD
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -109,9 +72,7 @@ export const options: NextAuthOptions = {
         },
       }
     },
-=======
   pages: {
     error: "/sign-in",
->>>>>>> master
   },
 }
