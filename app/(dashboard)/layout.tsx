@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar"
 import Sidebar from "@/components/sidebar"
 import { getApiLimitCount } from "@/lib/api-limit"
 import { checkSubscription } from "@/lib/subscription"
+import { useSession } from "next-auth/react"
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   // const apiLimitCount = await getApiLimitCount()

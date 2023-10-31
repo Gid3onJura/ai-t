@@ -1,6 +1,6 @@
 import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit"
 import { checkSubscription } from "@/lib/subscription"
-import { auth } from "@clerk/nextjs"
+// import { auth } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
 import { Configuration, ChatCompletionRequestMessage, OpenAIApi } from "openai"
 
