@@ -4,9 +4,14 @@ import { MessageSquare, ImageIcon, VideoIcon, Music, Code, ArrowRight } from "lu
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
+<<<<<<< HEAD
 import { signOut, useSession } from "next-auth/react"
 import { setEngine } from "crypto"
 import { Button } from "@/components/ui/button"
+=======
+import { useSession } from "next-auth/react"
+import { setEngine } from "crypto"
+>>>>>>> master
 
 const tools = [
   {
@@ -51,6 +56,7 @@ const DashboardPage = () => {
 
   const router = useRouter()
 
+<<<<<<< HEAD
   console.log("session:", session)
 
   if (!session?.data?.user) {
@@ -91,15 +97,44 @@ const DashboardPage = () => {
             <div className="flex items-center gap-x-4">
               <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
                 <tool.icon className={cn("w-8 h-8", tool.color)} />
+=======
+  console.log(session)
+
+  if (session.status === "loading") {
+    return <p>Loading...</p>
+  }
+
+  if (session.status === "unauthenticated") {
+    router?.push("/sign-in")
+  }
+
+  if (session.status === "authenticated") {
+    return (
+      <div>
+        <div className="mb-8 space-y-4">
+          <h2 className="text-2xl md:text-4xl font-bold text-center">Unendlich viele Möglichkeiten mit AI-T</h2>
+        </div>
+        <div className="px-4 md:px-20 lg:px-32 space-y-4">
+          {tools.map((tool) => (
+            <Card
+              onClick={() => router.push(tool.href)}
+              key={tool.href}
+              className="p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer"
+            >
+              <div className="flex items-center gap-x-4">
+                <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
+                  <tool.icon className={cn("w-8 h-8", tool.color)} />
+                </div>
+                <div className="font-semibold">{tool.label}</div>
+>>>>>>> master
               </div>
-              <div className="font-semibold">{tool.label}</div>
-            </div>
-            <ArrowRight className="w-5 h-5" />
-          </Card>
-        ))}
+              <ArrowRight className="w-5 h-5" />
+            </Card>
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default DashboardPage
