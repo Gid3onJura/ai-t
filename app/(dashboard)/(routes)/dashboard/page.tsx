@@ -66,7 +66,7 @@ const DashboardPage = () => {
           onClick={() =>
             signOut({
               redirect: true,
-              callbackUrl: `${window.location.origin}`,
+              callbackUrl: process.env.NEXTAUTH_URL,
             })
           }
         >
@@ -93,12 +93,12 @@ const DashboardPage = () => {
                 <tool.icon className={cn("w-8 h-8", tool.color)} />
               </div>
               <ArrowRight className="w-5 h-5" />
-            </Card>
-          ))}
-        </div>
+            </div>
+          </Card>
+        ))}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default DashboardPage

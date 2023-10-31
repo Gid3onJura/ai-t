@@ -11,7 +11,6 @@ export async function POST(request: Request) {
   const body: RequestBody = await request.json()
 
   const existingUser = await prismadb.user.findFirst({
-  const user = await prismadb.user.findFirst({
     where: {
       email: body.email,
     },

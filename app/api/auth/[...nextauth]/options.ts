@@ -32,7 +32,7 @@ export const options: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null
         }
-        
+
         const existingUser = await prismadb.user.findFirst({
           where: {
             email: credentials?.email,
@@ -72,7 +72,5 @@ export const options: NextAuthOptions = {
         },
       }
     },
-  pages: {
-    error: "/sign-in",
   },
 }
