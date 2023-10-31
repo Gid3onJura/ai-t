@@ -1,5 +1,6 @@
 import prismadb from "@/lib/prismadb"
 import * as bcrypt from "bcryptjs"
+import { NextResponse } from "next/server"
 
 interface RequestBody {
   email: string
@@ -9,16 +10,21 @@ interface RequestBody {
 export async function POST(request: Request) {
   const body: RequestBody = await request.json()
 
+  const existingUser = await prismadb.user.findFirst({
   const user = await prismadb.user.findFirst({
     where: {
       email: body.email,
     },
   })
 
-  if (user && (await bcrypt.compare(body.password, user.password))) {
-    const { password, ...userWithoutPassword } = user
-
-    return new Response(JSON.stringify(userWithoutPassword))
+  if (existingUser && (await bcrypt.compare(body.password, existingUser.password))) {
+    const { password, ...user } = existingUser
+    return NextResponse.json({
+      user,
+    })
   }
-  return new Response(JSON.stringify(null))
+  return NextResponse.json({
+    message: "Unauthorized",
+    status: 401,
+  })
 }

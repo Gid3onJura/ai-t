@@ -4,8 +4,9 @@ import { MessageSquare, ImageIcon, VideoIcon, Music, Code, ArrowRight } from "lu
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { setEngine } from "crypto"
+import { Button } from "@/components/ui/button"
 
 const tools = [
   {
@@ -50,34 +51,46 @@ const DashboardPage = () => {
 
   const router = useRouter()
 
-  console.log(session)
+  console.log("session:", session)
 
-  if (session.status === "loading") {
-    return <p>Loading...</p>
+  if (!session?.data?.user) {
+    router.push("/sign-in")
   }
 
-  if (session.status === "unauthenticated") {
-    router?.push("/sign-in")
-  }
-
-  if (session.status === "authenticated") {
-    return (
-      <div>
-        <div className="mb-8 space-y-4">
-          <h2 className="text-2xl md:text-4xl font-bold text-center">Unendlich viele Möglichkeiten mit AI-T</h2>
-        </div>
-        <div className="px-4 md:px-20 lg:px-32 space-y-4">
-          {tools.map((tool) => (
-            <Card
-              onClick={() => router.push(tool.href)}
-              key={tool.href}
-              className="p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer"
-            >
-              <div className="flex items-center gap-x-4">
-                <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                  <tool.icon className={cn("w-8 h-8", tool.color)} />
-                </div>
-                <div className="font-semibold">{tool.label}</div>
+  return (
+    <div>
+      <div className="absolute top-2 right-2">
+        <Button
+          variant="outline"
+          className="rounded-full"
+          onClick={() =>
+            signOut({
+              redirect: true,
+              callbackUrl: `${window.location.origin}`,
+            })
+          }
+        >
+          Logout
+        </Button>
+      </div>
+      <div className="mb-8 space-y-4">
+        <h2 className="text-2xl md:text-4xl font-bold text-center">
+          {session?.data?.user ? <>Hallo {session.data.user.username}</> : <></>}
+        </h2>
+      </div>
+      <div className="mb-8 space-y-4">
+        <h2 className="text-2xl md:text-4xl font-bold text-center">Unendlich viele Möglichkeiten mit AI-T</h2>
+      </div>
+      <div className="px-4 md:px-20 lg:px-32 space-y-4">
+        {tools.map((tool) => (
+          <Card
+            onClick={() => router.push(tool.href)}
+            key={tool.href}
+            className="p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer"
+          >
+            <div className="flex items-center gap-x-4">
+              <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
+                <tool.icon className={cn("w-8 h-8", tool.color)} />
               </div>
               <ArrowRight className="w-5 h-5" />
             </Card>

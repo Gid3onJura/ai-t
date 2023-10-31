@@ -6,6 +6,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { signIn, signOut, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const font = Montserrat({
   weight: "600",
@@ -14,7 +15,7 @@ const font = Montserrat({
 
 export const LandingNavbar = () => {
   const session = useSession()
-
+  const router = useRouter()
   console.log(session)
 
   return (
@@ -29,9 +30,9 @@ export const LandingNavbar = () => {
         <Button
           variant="outline"
           className="rounded-full"
-          onClick={session && session.data ? () => signOut() : () => signIn()}
+          onClick={session && session.data ? () => router.push("/dashboard") : () => router.push("/sign-in")}
         >
-          {session && session.data ? "Logout" : "Login"}
+          {session && session.data ? "Dashboard" : "Login"}
         </Button>
       </div>
     </nav>
